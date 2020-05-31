@@ -1,5 +1,6 @@
 {
   "compileOnSave": false,
+  "enableIvy": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -7,6 +8,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
