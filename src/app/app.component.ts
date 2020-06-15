@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'demo-ui-app';
   empForm: FormGroup;
   employee: Employee = new Employee();
-  displayedColumns: string[] = ['id', 'name', 'age','read','write','speak'];
+  displayedColumns: string[] = ['id', 'name', 'age'];
   dataSource: Employee[] = [];
   laguageArray: FormArray;
   constructor(private appService: AppService, private formBuilder: FormBuilder) { }
