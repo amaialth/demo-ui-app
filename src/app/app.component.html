@@ -1,50 +1,91 @@
-<div >
+<p>
+  <mat-toolbar *ngIf="getUserName">
+    <greet name="Anbu"></greet>
+    <greet name="Mani"></greet>
+    <greet name="Siva"></greet>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" style="float: right;" (click)="logout()">
+      <mat-icon>logout</mat-icon>Logout</button>
+  </mat-toolbar>
+</p>
+<div *ngIf="!getUserName">
+  <button mat-raised-button color="primary" (click)="login()">
+    <mat-icon>login</mat-icon>Login</button>
+</div>
+<div class="container">
+<div *ngIf="getUserName" class="row">
+  <div class="col-3">
   <form [formGroup]="empForm">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>ID</mat-label>
       <input formControlName="id" [(ngModel)]="employee.id" matInput placeholder="Employee ID">
     </mat-form-field>
-    <br/>
-    <mat-form-field appearance="fill">
+    <br />
+    <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input formControlName="name" [(ngModel)]="employee.name"  matInput placeholder="Name">
+      <input formControlName="name" [(ngModel)]="employee.name" matInput placeholder="Name">
     </mat-form-field>
-    <br/>
-    <mat-form-field appearance="fill">
+    <br />
+    <mat-form-field appearance="outline">
       <mat-label>Age</mat-label>
-      <input formControlName="age" [(ngModel)]="employee.age"  matInput placeholder="Age">
+      <input formControlName="age" [(ngModel)]="employee.age" matInput placeholder="Age">
     </mat-form-field>
-    <br/>
+    <br />
+    <div formArrayName="language" *ngFor="let lang of getControls();let i=index">
+      <div [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Language</mat-label>
+          <mat-select formControlName="languageDropdown">
+            <mat-option value="English">English</mat-option>
+            <mat-option value="Tamil">Tamil</mat-option>
+            <mat-option value="Hindi">Hindi</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div formArrayName="readWriteSpeak" *ngFor="let subType of getSubControls(i);let subIndex=index">
+          <div [formGroupName]="subIndex">
+            <mat-checkbox formControlName="speak" value="speak" (change)="printArray(i,subIndex)">Speak</mat-checkbox>
+            <mat-checkbox formControlName="read" value="read" (change)="printArray(i,subIndex)">Read</mat-checkbox>
+            <mat-checkbox formControlName="write" value="write" (change)="printArray(i,subIndex)">Write</mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)=addLanguageFields()>Add Language</button>
+    <br />
     <button mat-raised-button color="primary" (click)=saveEmployee(employee)>Save</button>
   </form>
-  <mat-divider></mat-divider>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  </div>
+<div class="col-9">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
-  
 
-  <!-- ID Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
-  
+
     <!-- Weight Column -->
     <ng-container matColumnDef="age">
       <th mat-header-cell *matHeaderCellDef> Age </th>
       <td mat-cell *matCellDef="let element"> {{element.age}} </td>
     </ng-container>
-   
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-
-
+</div>
+</div>
 <router-outlet></router-outlet>
+<footer *ngIf="getUserName">
+  <div style="float: right;">Application developed by Anbumani &copy;AnbuZ Hobbiez</div>
+</footer>
