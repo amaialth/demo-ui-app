@@ -4,10 +4,10 @@ threadsafe: yes
 
 handlers:
   - url: /
-    static_files: dist/user-dashboard-app/index.html
-    upload: dist/user-dashboard-app/index.html
+    static_files: dist/demo-ui-app/index.html
+    upload: dist/demo-ui-app/index.html
   - url: /
-    static_dir: dist/user-dashboard-app
+    static_dir: dist/demo-ui-app
 
 skip_files:
   - e2e/
